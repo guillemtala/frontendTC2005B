@@ -6,7 +6,7 @@
 Primero, clona el repositorio y accede a la carpeta del proyecto:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/guillemtala/frontendTC2005B.git
 cd frontendTC2005B
 ```
 
