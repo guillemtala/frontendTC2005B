@@ -1,5 +1,4 @@
-import { AuthModel } from '../models/auth.model.js';
-import { renderSidebar } from '../views/sidebar.view.js';
+import { initLayout } from './layout.ctrl.js';
 import { AttendanceModel } from '../models/attendance.model.js';
 
 // Fecha inicial fijada a Septiembre 2026 (mes 8 = septiembre)
@@ -7,30 +6,8 @@ let currentDate = new Date(2026, 8, 1);
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Verificación síncrona de sesión
-    const currentUser = AuthModel.getCurrentUser();
-    if (!currentUser) {
-        window.location.replace('/');
-        return;
-    }
-
-    // 2. Inyectar menú lateral con 'kardex' activo
-    const sidebarContainer = document.getElementById('sidebar-container');
-    if (sidebarContainer) {
-        sidebarContainer.innerHTML = renderSidebar('kardex');
-    }
-
-    // 3. Vincular botón cerrar sesión del sidebar
-    const logoutBtn = document.getElementById('btn-logout');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            AuthModel.logout();
-            window.location.replace('/');
-        });
-    }
-
-    // 4. Interacciones globales (dropdown, móvil)
-    setupGlobalInteractions();
+    const user = initLayout('kardex');
+    if (!user) return;
 
     // 5. Renderizar calendario y botones
     renderCalendar(currentDate);
@@ -205,5 +182,18 @@ function setupGlobalInteractions() {
         };
         btnMenu.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', toggleSidebar);
+    }
+}
+
+function renderUserProfile(user) {
+    const nameEl = document.getElementById('user-display-name');
+    const roleEl = document.getElementById('user-display-role');
+    const avatarEl = document.getElementById('user-display-avatar');
+
+    if (nameEl) nameEl.textContent = user.name;
+    if (roleEl) roleEl.textContent = `Nómina: #${user.id} • ${user.role}`;
+    if (avatarEl && user.avatar) {
+        avatarEl.src = user.avatar;
+        avatarEl.alt = `Foto de perfil de ${user.name}`;
     }
 }
