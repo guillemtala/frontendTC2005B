@@ -1,36 +1,12 @@
-import { AuthModel } from '../models/auth.model.js';
-import { renderSidebar } from '../views/sidebar.view.js';
 import { AttendanceModel } from '../models/attendance.model.js';
+import { initLayout } from './layout.ctrl.js';
 
 // Fecha inicial fijada a Septiembre 2026 (mes 8 = septiembre)
 let currentDate = new Date(2026, 8, 1);
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificación síncrona de sesión
-    const currentUser = AuthModel.getCurrentUser();
-    if (!currentUser) {
-        window.location.replace('/');
-        return;
-    }
-
-    // 2. Inyectar menú lateral con 'kardex' activo
-    const sidebarContainer = document.getElementById('sidebar-container');
-    if (sidebarContainer) {
-        sidebarContainer.innerHTML = renderSidebar('kardex');
-    }
-
-    // 3. Vincular botón cerrar sesión del sidebar
-    const logoutBtn = document.getElementById('btn-logout');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            AuthModel.logout();
-            window.location.replace('/');
-        });
-    }
-
-    // 4. Interacciones globales (dropdown, móvil)
-    setupGlobalInteractions();
+    const user = initLayout('kardex');
+    if (!user) return;
 
     // 5. Renderizar calendario y botones
     renderCalendar(currentDate);
@@ -175,35 +151,5 @@ function updateButtonStates() {
         checkInBtn.textContent = `Entrada: ${todayStatus.checkInTime}`;
         checkOutBtn.disabled = true;
         checkOutBtn.textContent = `Salida: ${todayStatus.checkOutTime}`;
-    }
-}
-
-function setupGlobalInteractions() {
-    const bellBtn = document.getElementById('btn-notifications');
-    const dropdownMenu = document.getElementById('dropdown-notifications');
-    const btnMenu = document.getElementById('btn-menu');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('menu-overlay');
-
-    if (bellBtn && dropdownMenu) {
-        bellBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (dropdownMenu.classList.contains('show') && !dropdownMenu.contains(e.target) && e.target !== bellBtn) {
-                dropdownMenu.classList.remove('show');
-            }
-        });
-    }
-
-    if (btnMenu && sidebar && overlay) {
-        const toggleSidebar = () => {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
-        };
-        btnMenu.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
     }
 }
