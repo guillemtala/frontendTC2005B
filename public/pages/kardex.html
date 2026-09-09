@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kárdex de Asistencia - Portal RH</title>
+    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <div class="menu-overlay" id="menu-overlay"></div>
+
+        <!-- El Sidebar se inyecta dinámicamente aquí -->
+        <div id="sidebar-container"></div>
+
+        <!-- ================= CONTENIDO PRINCIPAL ================= -->
+        <main class="main-content">
+
+            <!-- Top Navbar fija -->
+            <nav class="top-navbar">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="btn-menu-mobile" id="btn-menu">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+                    <div class="mobile-logo">
+                        <h2 style="color: var(--primary-dark); font-size: 1.1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 0;">
+                            <span style="background: var(--primary-dark); color: white; padding: 4px; border-radius: 6px; display: flex;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4 12.5c0 3.6 2.9 6.5 6.5 6.5h7z"></path></svg>
+              </span> ESLABÓN
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <div class="dropdown">
+                        <button class="btn-icon" id="btn-notifications">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span class="badge-dot"></span>
+            </button>
+                        <div class="dropdown-menu" id="dropdown-notifications">
+                            <div class="dropdown-header">Notificaciones (2)</div>
+                            <a href="#" class="dropdown-item">
+                                <span class="notif-title">🌴 Solicitud de vacaciones aprobada</span>
+                                <span class="notif-time">Hoy, 09:30 AM</span>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="notif-title">📄 Nuevo recibo de nómina (Q2 Ago)</span>
+                                <span class="notif-time">Ayer, 16:45 PM</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name" style="font-size: 1.1rem; font-weight: 700;">Juan Pérez G.</span>
+                            <span class="user-role" style="font-size: 0.8rem;">Nómina: #EP-4091 • Colaborador</span>
+                        </div>
+                        <img src="/assets/user-profile.jpg" alt="Foto de perfil de Juan Pérez" class="avatar">
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Encabezado de la página -->
+            <header class="page-header">
+                <h1 class="title-primary" style="font-size: 1.8rem; margin-bottom: 0.3rem;">Kárdex de Asistencia</h1>
+                <p class="subtitle" style="margin-bottom: 1.5rem;">Portal de Autoservicio Kiosco • Gestiona tus solicitudes e información laboral de forma ágil y segura.</p>
+            </header>
+
+            <!-- Calendario Kárdex -->
+            <section class="calendar-section">
+                <h2 style="font-size: 1.3rem; color: var(--primary-dark); font-weight: 700; margin-bottom: 1.5rem;">Calendario de asistencia</h2>
+
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <div class="calendar-month-title" id="cal-month-title">Septiembre 2026</div>
+                        <div class="calendar-nav-btns">
+                            <button class="btn-cal-arrow" id="cal-prev-month" title="Mes anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+                            <button class="btn-cal-arrow" id="cal-next-month" title="Mes siguiente">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+                        </div>
+                    </div>
+
+                    <div class="calendar-weekdays">
+                        <div>Lun</div>
+                        <div>Mar</div>
+                        <div>Mié</div>
+                        <div>Jue</div>
+                        <div>Vie</div>
+                        <div>Sáb</div>
+                        <div>Dom</div>
+                    </div>
+
+                    <div class="calendar-grid" id="cal-days-container">
+                        <!-- Los días se inyectan dinámicamente con JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Leyenda -->
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot attended"></span> Asistió
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot missed"></span> No asistió
+                    </div>
+                </div>
+
+                <!-- Botones de Marcado -->
+                <div class="attendance-actions">
+                    <button class="btn-clock" id="btn-checkin">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Marcar asistencia
+          </button>
+                    <button class="btn-clock" id="btn-checkout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Marcar hora de salida
+          </button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script type="module" src="/js/controllers/kardex.ctrl.js"></script>
+</body>
+
+</html>

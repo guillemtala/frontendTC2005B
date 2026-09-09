@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso - Portal RH</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body>
+
+    <main class="auth-layout">
+        <div class="card card-auth">
+
+            <div style="margin-bottom: 2rem;">
+                <h2 style="color: var(--primary-dark); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <span style="background: var(--primary-dark); color: white; padding: 6px; border-radius: 6px; display: flex;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4 12.5c0 3.6 2.9 6.5 6.5 6.5h7z"></path></svg>
+          </span> ESLABÓN CLOUD
+                </h2>
+                <p class="subtitle" style="margin-top: 0.5rem; margin-bottom: 0;">Portal de Autoservicio para Colaboradores</p>
+            </div>
+
+            <!-- Alerta para credenciales incorrectas -->
+            <div id="login-error" class="alert alert-warning" style="display: none; margin-bottom: 1.5rem; text-align: left; padding: 0.8rem 1rem;"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="input-email" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Correo corporativo</label>
+                    <input type="email" id="input-email" class="form-input" placeholder="ejemplo@eslabon.com" value="" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="input-password" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Contraseña</label>
+                    <input type="password" id="input-password" class="form-input" placeholder="••••••••" value="" required>
+                </div>
+
+                <button type="submit" id="btn-submit-login" class="btn btn-primary" style="margin-top: 1rem;">
+          Iniciar Sesión
+        </button>
+            </form>
+
+        </div>
+    </main>
+
+    <script type="module" src="/js/controllers/auth.ctrl.js"></script>
+</body>
+
+</html>

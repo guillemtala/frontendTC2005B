@@ -1,0 +1,304 @@
+/* =========================================
+   LAYOUT.CSS - Estructuras de las pantallas
+   ========================================= */
+
+
+/* --- Layout del Login --- */
+
+.auth-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+
+/* --- Layout del Dashboard (Main) --- */
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* --- Sidebar --- */
+
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-card);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
+}
+
+.menu-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0 1rem 0 0;
+    margin: 0;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0.85rem 1.5rem;
+    color: var(--primary-dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0 8px 8px 0;
+}
+
+.sidebar-link svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.sidebar-link:hover {
+    background-color: #F4F7F9;
+}
+
+.sidebar-link.active {
+    background-color: var(--accent-light);
+    color: var(--accent-color);
+    font-weight: 600;
+    border-left: 4px solid var(--accent-color);
+}
+
+.sidebar-link.active::after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+}
+
+
+/* --- Contenido Principal (Evita superposición) --- */
+
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 2rem 3rem;
+    width: calc(100% - 260px);
+}
+
+
+/* --- Header y Perfil --- */
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-left: 1px solid var(--border-color);
+    padding-left: 1.5rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--primary-dark);
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-color);
+    object-fit: cover;
+    /* Evita que la foto se deforme o aplaste */
+    display: block;
+    flex-shrink: 0;
+}
+
+
+/* --- Cuadrículas (Grids) --- */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+
+/* --- Menú Móvil (Fondo oscuro) --- */
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.menu-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+.btn-menu-mobile {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary-dark);
+    cursor: pointer;
+}
+
+.top-navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* NUEVO: Lo fijamos arriba y le damos fondo blanco */
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-card);
+    /* Fondo blanco */
+    z-index: 900;
+    /* Para que quede por encima de las tarjetas al hacer scroll */
+    /* Expandimos la barra para que cubra todo el ancho del main-content */
+    padding: 1rem 3rem;
+    margin-top: -2rem;
+    margin-left: -3rem;
+    margin-right: -3rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    /* Línea sutil para separar */
+}
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.mobile-logo {
+    display: none;
+}
+
+
+/* Contenedor del texto dentro de la alerta */
+
+.alert-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    color: inherit;
+}
+
+
+/* Alineación vertical del icono y texto dentro del <strong> */
+
+.alert-content strong {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: inherit;
+}
+
+
+/* Tamaño y comportamiento del icono SVG */
+
+.alert-content svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex-shrink: 0;
+    stroke: currentColor;
+}
+
+
+/* --- RESPONSIVE DESIGN --- */
+
+@media (max-width: 992px) {
+    .top-navbar {
+        justify-content: space-between;
+        /* Ajustamos el tamaño de la barra fija para móviles */
+        padding: 1rem;
+        margin-top: -1.5rem;
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+    .btn-menu-mobile {
+        display: block;
+    }
+    .user-info {
+        display: none;
+    }
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1.5rem 1rem;
+    }
+    .mobile-logo {
+        display: block;
+        /* Muestra el logo cuando estamos en móvil */
+    }
+}

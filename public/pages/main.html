@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Portal RH</title>
+    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Overlay oscuro para el móvil -->
+        <div class="menu-overlay" id="menu-overlay"></div>
+
+        <!-- ================= SIDEBAR ================= -->
+        <div id="sidebar-container"></div>
+
+        <!-- ================= CONTENIDO PRINCIPAL ================= -->
+        <main class="main-content">
+
+            <!-- 1. MENÚ DE ARRIBA (Top Navbar) -->
+            <nav class="top-navbar">
+
+                <!-- Izquierda: Hamburguesa + Logo Móvil -->
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="btn-menu-mobile" id="btn-menu">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+
+                    <!-- NUEVO: Logo que solo se verá en móvil -->
+                    <div class="mobile-logo">
+                        <h2 style="color: var(--primary-dark); font-size: 1.1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 0;">
+                            <span style="background: var(--primary-dark); color: white; padding: 4px; border-radius: 6px; display: flex;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4 12.5c0 3.6 2.9 6.5 6.5 6.5h7z"></path></svg>
+                            </span> ESLABÓN
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Acciones Derecha: Campana + Perfil -->
+                <div class="header-actions">
+                    <div class="dropdown">
+                        <button class="btn-icon" id="btn-notifications">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                            <span class="badge-dot"></span>
+                        </button>
+                        <div class="dropdown-menu" id="dropdown-notifications">
+                            <div class="dropdown-header">Notificaciones (2)</div>
+                            <a href="#" class="dropdown-item">
+                                <span class="notif-title">Solicitud de vacaciones aprobada</span>
+                                <span class="notif-time">Hoy, 09:30 AM</span>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="notif-title">Nuevo recibo de nómina (Q2 Ago)</span>
+                                <span class="notif-time">Ayer, 16:45 PM</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name" style="font-size: 1.1rem; font-weight: 700;">Juan Pérez G.</span>
+                            <span class="user-role" style="font-size: 0.8rem;">Nómina: #EP-4091 • Colaborador</span>
+                        </div>
+                        <img src="/assets/user-profile.jpg" alt="Foto de perfil de Juan Pérez" class="avatar">
+                    </div>
+                </div>
+            </nav>
+
+            <!-- 2. CABECERA DE LA PÁGINA (Textos de bienvenida) -->
+            <header class="page-header">
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Portal RH / <strong style="color: var(--text-main);">Dashboard del Empleado</strong></p>
+                <h1 class="title-primary" style="margin-top: 0.5rem; font-size: 1.8rem;">¡Bienvenido de vuelta, Juan!</h1>
+                <p class="subtitle" style="margin-bottom: 0;">Portal de Autoservicio Kiosco • Gestiona tus solicitudes e información laboral de forma ágil y segura.</p>
+            </header>
+
+            <!-- Alerta Urgente -->
+            <div class="alert alert-warning">
+                <div class="alert-content">
+                    <strong>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert">
+        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/>
+        <path d="M12 9v4"/>
+        <path d="M12 17h.01"/>
+      </svg>
+      Acción requerida:
+    </strong>
+                    <span>Tu comprobante de domicilio caduca en 5 días. Por favor, actualízalo.</span>
+                </div>
+                <button class="btn btn-outline" style="background: white;">Subir archivo</button>
+            </div>
+
+            <!-- Grid 3 Tarjetas Superiores -->
+            <div class="stats-grid">
+                <div class="card stat-card">
+                    <p class="stat-title">Días de vacaciones disponibles</p>
+                    <h2 class="stat-value">12 días</h2>
+                    <div class="stat-footer">
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Periodo vigente hasta dic. 2026</span>
+                        <button class="btn btn-accent btn-sm">Solicitar día</button>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <p class="stat-title">Solicitudes pendientes</p>
+                    <h2 class="stat-value">1 trámite</h2>
+                    <div class="stat-footer">
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">En revisión por tu líder directo</span>
+                        <a href="#" class="link-forgot">Ver estado</a>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <p class="stat-title">Último recibo de nómina</p>
+                    <h2 class="stat-value">Q2 Ago</h2>
+                    <div class="stat-footer">
+                        <a href="#" class="link-forgot" style="color: var(--primary-light);">Descargar PDF (42 KB)</a>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="title-primary" style="font-size: 1.3rem; margin-top: 2rem; margin-bottom: 1.5rem;">¿Qué deseas hacer hoy?</h3>
+
+            <!-- Grid 6 Tarjetas con ICONOS SVG -->
+            <div class="action-grid">
+
+                <div class="card action-card active">
+                    <div class="action-icon" style="background: var(--accent-light); color: var(--accent-color);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <h4 class="action-title">Solicitar Vacaciones</h4>
+                    <p class="action-desc">Agenda tus días de descanso y consulta tu saldo disponible.</p>
+                </div>
+
+                <div class="card action-card">
+                    <div class="action-icon" style="background: #F0F4F8; color: var(--primary-dark);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+                    <h4 class="action-title">Recibos de Nómina</h4>
+                    <p class="action-desc">Visualiza, descarga y firma digitalmente tus recibos recientes.</p>
+                </div>
+
+                <div class="card action-card">
+                    <div class="action-icon" style="background: #F0F4F8; color: var(--primary-dark);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <h4 class="action-title">Tiempo Laborado</h4>
+                    <p class="action-desc">Monitorea tus horas registradas, turnos y horas extra.</p>
+                </div>
+
+                <div class="card action-card">
+                    <div class="action-icon" style="background: #F0F4F8; color: var(--primary-dark);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <h4 class="action-title">Datos Personales</h4>
+                    <p class="action-desc">Mantén actualizado tu expediente, contacto y beneficiarios.</p>
+                </div>
+
+                <div class="card action-card">
+                    <div class="action-icon" style="background: #F0F4F8; color: var(--primary-dark);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-megaphone"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/><path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"/><path d="M8 6v8"/></svg>
+                    </div>
+                    <h4 class="action-title">Revisar Noticias</h4>
+                    <p class="action-desc">Infórmate de los comunicados oficiales e iniciativas de la empresa.</p>
+                </div>
+
+                <div class="card action-card">
+                    <div class="action-icon" style="background: #F0F4F8; color: var(--primary-dark);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <h4 class="action-title">Consultar Préstamos</h4>
+                    <p class="action-desc">Revisa saldos, plazos y solicita nuevos adelantos de nómina.</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="/js/controllers/main.ctrl.js"></script>
+</body>
+
+</html>
