@@ -2,43 +2,63 @@ import { AuthModel } from '../models/auth.model.js';
 import { renderSidebar } from '../views/sidebar.view.js';
 import { renderNavbar } from '../views/navbar.view.js';
 
+const THEME_KEY = 'eslabon_theme_preference';
+
 export function initLayout(activeRoute = 'inicio') {
-    // 1. Guardia de autenticación instantáneo
+    // Validar usuario
     const currentUser = AuthModel.getCurrentUser();
     if (!currentUser) {
         window.location.replace('/');
         return null;
     }
 
-    // 2. Inyectar Menú Lateral
+    // Validar autenticación de doble factor (2FA)
+    const is2FA = localStorage.getItem('eslabon_2fa_verified') === 'true';
+    if (!is2FA) {
+        window.location.replace('/pages/2fa.html');
+        return null;
+    }
+
+    // Renderizar sidebar
     const sidebarContainer = document.getElementById('sidebar-container');
     if (sidebarContainer) {
         sidebarContainer.innerHTML = renderSidebar(activeRoute);
     }
 
-    // 3. Inyectar Top Navbar respetando la jerarquía para sticky
+    // Renderizar navbar
     const navbarContainer = document.getElementById('navbar-container');
     if (navbarContainer) {
-        // Si en el HTML dejaste <nav class="top-navbar" id="navbar-container">
         if (navbarContainer.tagName === 'NAV') {
             navbarContainer.innerHTML = renderNavbar(currentUser);
         } else {
-            // Si dejaste un <div>, lo reemplazamos por el nodo real para no romper position: sticky
             const tempWrapper = document.createElement('div');
             tempWrapper.innerHTML = renderNavbar(currentUser).trim();
             navbarContainer.replaceWith(tempWrapper.firstElementChild);
         }
     }
 
-    // 4. Configurar eventos globales
+    // Eventos globales
     bindGlobalEvents();
 
-    // Devolvemos el usuario actual por si la página necesita su ID o rol
     return currentUser;
 }
 
 function bindGlobalEvents() {
-    // Cerrar sesión
+    applyThemePreference();
+
+    // Toggle tema
+    const themeBtn = document.getElementById('btn-theme-toggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.documentElement.classList.toggle('dark-mode');
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+            updateThemeIcon(isDark);
+        });
+    }
+
+    // Logout
     const logoutBtn = document.getElementById('btn-logout');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
@@ -49,7 +69,7 @@ function bindGlobalEvents() {
         });
     }
 
-    // Dropdown de Notificaciones
+    // Notificaciones
     const bellBtn = document.getElementById('btn-notifications');
     const dropdownMenu = document.getElementById('dropdown-notifications');
     if (bellBtn && dropdownMenu) {
@@ -65,7 +85,7 @@ function bindGlobalEvents() {
         });
     }
 
-    // Menú Hamburguesa Móvil
+    // Menú móvil
     const btnMenu = document.getElementById('btn-menu');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('menu-overlay');
@@ -77,5 +97,30 @@ function bindGlobalEvents() {
         };
         btnMenu.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
+    }
+}
+
+function applyThemePreference() {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const isDark = savedTheme === 'dark';
+    if (isDark) {
+        document.documentElement.classList.add('dark-mode');
+        document.body.classList.add('dark-mode');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        document.body.classList.remove('dark-mode');
+    }
+    updateThemeIcon(isDark);
+}
+
+function updateThemeIcon(isDark) {
+    const iconEl = document.getElementById('theme-toggle-icon');
+    if (!iconEl) return;
+    if (isDark) {
+        iconEl.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`;
+        iconEl.setAttribute('stroke', '#FBBF24');
+    } else {
+        iconEl.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+        iconEl.setAttribute('stroke', 'var(--primary-dark)');
     }
 }

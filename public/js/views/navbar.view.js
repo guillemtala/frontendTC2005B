@@ -1,15 +1,31 @@
+function resolveLocalAvatar(avatarStr, identifier) {
+    if (avatarStr && typeof avatarStr === 'string') {
+        if (avatarStr.includes('default-user')) {
+            return '/assets/default-user.png';
+        }
+        if (avatarStr.includes('user-profile')) {
+            return '/assets/user-profile.jpg';
+        }
+    }
+    const str = String(identifier || '').toLowerCase();
+    if (str.includes('4092') || str.includes('maria') || str.includes('maría')) {
+        return '/assets/default-user.png';
+    }
+    if (str.includes('4091') || str.includes('juan')) {
+        return '/assets/user-profile.jpg';
+    }
+    return '/assets/default-user.png';
+}
+
 export function renderNavbar(user) {
-    let avatarSrc;
-    let userName;
-    let userRole;
+    let avatarSrc = '/assets/default-user.png';
+    let userName = 'Colaborador';
+    let userRole = 'Cargando...';
+
     if (user) {
-        avatarSrc = user.avatar || '/assets/default-user.png?id=default';
+        avatarSrc = resolveLocalAvatar(user.avatar || user.foto, user.id || user.name || user.email);
         userName = user.name || 'Colaborador';
         userRole = `Nómina: #${user.id} • ${user.role}`;
-    } else {
-        avatarSrc = '/assets/default-user.png?id=default';
-        userName = 'Colaborador';
-        userRole = 'Cargando...';
     }
 
     return `
@@ -29,6 +45,14 @@ export function renderNavbar(user) {
       </div>
 
       <div class="header-actions">
+        <!-- Botón Modo Oscuro / Claro -->
+        <button class="btn-icon" id="btn-theme-toggle" type="button" aria-label="Cambiar tema modo oscuro" title="Cambiar tema (Modo Oscuro / Claro)" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: background-color 0.2s;">
+          <svg id="theme-toggle-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Dropdown de Notificaciones -->
         <div class="dropdown">
           <button class="btn-icon" id="btn-notifications" type="button" aria-label="Notificaciones">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -36,7 +60,7 @@ export function renderNavbar(user) {
           </button>
           <div class="dropdown-menu" id="dropdown-notifications">
             <div class="dropdown-header">Notificaciones (2)</div>
-            <a href="/pages/vacaciones.html" class="dropdown-item">
+            <a href="/pages/solicitudes.html" class="dropdown-item">
               <span class="notif-title"> Solicitud de vacaciones aprobada</span>
               <span class="notif-time">Hoy, 09:30 AM</span>
             </a>
@@ -52,7 +76,7 @@ export function renderNavbar(user) {
             <span class="user-name" id="user-display-name" style="font-size: 1.1rem; font-weight: 700;">${userName}</span>
             <span class="user-role" id="user-display-role" style="font-size: 0.8rem;">${userRole}</span>
           </div>
-          <img id="user-display-avatar" src="${avatarSrc}" alt="Foto de perfil de ${userName}" class="avatar">
+          <img id="user-display-avatar" src="${avatarSrc}" onerror="this.onerror=null; this.src='/assets/default-user.png';" alt="Foto de perfil de ${userName}" class="avatar">
         </div>
       </div>
     </nav>

@@ -10,6 +10,13 @@
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <script>
+        (function() {
+            if (localStorage.getItem('eslabon_theme_preference') === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/components.css">
@@ -20,18 +27,20 @@
     <main class="auth-layout">
         <div class="card card-auth">
 
-            <div style="margin-bottom: 2rem;">
-                <h2 style="color: var(--primary-dark); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <div style="margin-bottom: 2rem; text-align: center;">
+                <h2 style="color: var(--primary-dark); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 0;">
                     <span style="background: var(--primary-dark); color: white; padding: 6px; border-radius: 6px; display: flex;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4 12.5c0 3.6 2.9 6.5 6.5 6.5h7z"></path></svg>
-          </span> ESLABÓN CLOUD
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4 12.5c0 3.6 2.9 6.5 6.5 6.5h7z"></path></svg>
+                    </span> ESLABÓN CLOUD
                 </h2>
-                <p class="subtitle" style="margin-top: 0.5rem; margin-bottom: 0;">Portal de Autoservicio para Colaboradores</p>
+                <small style="color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.5px; display: block; margin-top: 4px; font-weight: 700;">BY PEOPLETECH</small>
+                <p id="login-subtitle" class="subtitle" style="margin-top: 0.8rem; margin-bottom: 0;">Portal de Autoservicio Kiosco • Ingresa tu información para iniciar sesión.</p>
             </div>
 
-            <!-- Alerta para credenciales incorrectas -->
+            <!-- Alerta para credenciales / código incorrecto -->
             <div id="login-error" class="alert alert-warning" style="display: none; margin-bottom: 1.5rem; text-align: left; padding: 0.8rem 1rem;"></div>
 
+            <!-- PASO 1: Formulario de Credenciales -->
             <form id="login-form">
                 <div class="form-group">
                     <label for="input-email" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">Correo corporativo</label>
@@ -44,8 +53,43 @@
                 </div>
 
                 <button type="submit" id="btn-submit-login" class="btn btn-primary" style="margin-top: 1rem;">
-          Iniciar Sesión
-        </button>
+                    Iniciar Sesión
+                </button>
+
+                <div style="margin-top: 1.2rem; text-align: center;">
+                    <a href="#" id="link-forgot-password" class="link-forgot">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+
+            <!-- PASO 2: Verificación de 2 Pasos -->
+            <form id="form-2fa" style="display: none;">
+                <div class="form-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.8rem; text-align: left;">Código de verificación (6 dígitos) El codigo de prueba es 454545</label>
+                    <div style="display: flex; justify-content: space-between; gap: 6px; margin-bottom: 0.5rem;" id="otp-container">
+                        <input type="text" maxlength="1" class="form-input otp-input" id="otp-1" inputmode="numeric" pattern="[0-9]*" style="width: 44px; height: 48px; padding: 0; text-align: center; font-size: 1.2rem; font-weight: 700; line-height: 48px; box-sizing: border-box;"
+                            required>
+                        <input type="text" maxlength="1" class="form-input otp-input" id="otp-2" inputmode="numeric" pattern="[0-9]*" style="width: 44px; height: 48px; padding: 0; text-align: center; font-size: 1.2rem; font-weight: 700; line-height: 48px; box-sizing: border-box;"
+                            required>
+                        <input type="text" maxlength="1" class="form-input otp-input" id="otp-3" inputmode="numeric" pattern="[0-9]*" style="width: 44px; height: 48px; padding: 0; text-align: center; font-size: 1.2rem; font-weight: 700; line-height: 48px; box-sizing: border-box;"
+                            required>
+                        <input type="text" maxlength="1" class="form-input otp-input" id="otp-4" inputmode="numeric" pattern="[0-9]*" style="width: 44px; height: 48px; padding: 0; text-align: center; font-size: 1.2rem; font-weight: 700; line-height: 48px; box-sizing: border-box;"
+                            required>
+                        <input type="text" maxlength="1" class="form-input otp-input" id="otp-5" inputmode="numeric" pattern="[0-9]*" style="width: 44px; height: 48px; padding: 0; text-align: center; font-size: 1.2rem; font-weight: 700; line-height: 48px; box-sizing: border-box;"
+                            required>
+                        <input type="text" maxlength="1" class="form-input otp-input" id="otp-6" inputmode="numeric" pattern="[0-9]*" style="width: 44px; height: 48px; padding: 0; text-align: center; font-size: 1.2rem; font-weight: 700; line-height: 48px; box-sizing: border-box;"
+                            required>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-submit-2fa" class="btn btn-primary" style="margin-top: 1rem;">
+                    Verificar Código
+                </button>
+
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <button type="button" id="btn-back-step1" class="link-forgot" style="background: none; border: none; cursor: pointer; font-size: 0.85rem;">
+                        ← Regresar a inicio de sesión
+                    </button>
+                </div>
             </form>
 
         </div>

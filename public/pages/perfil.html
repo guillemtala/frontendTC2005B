@@ -9,7 +9,9 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <meta name="apple-mobile-web-app-title" content="Portal RH" />
+
+    <script>(function(){if(localStorage.getItem("eslabon_theme_preference")==="dark"){document.documentElement.classList.add("dark-mode");}})();</script>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/components.css">
@@ -19,21 +21,73 @@
     <div class="dashboard-layout">
         <div class="menu-overlay" id="menu-overlay"></div>
 
-        <!-- Inyectado por JS -->
+        <!-- Sidebar inyectado por JS -->
         <div id="sidebar-container"></div>
 
         <main class="main-content">
-            <!-- Inyectado por JS -->
+            <!-- Top Navbar inyectada por JS -->
             <div id="navbar-container"></div>
 
-            <!-- Contenido específico de esta sección -->
+            <!-- Encabezado de Perfil -->
             <header class="page-header">
-                <h1 class="title-primary">Mi Perfil</h1>
-                <p class="subtitle">Consulta y actualiza tu información personal y laboral.</p>
+                <h1 class="title-primary">Mi Perfil de Colaborador</h1>
+                <p class="subtitle">Consulta tu expediente laboral, datos personales y cuenta bancaria depositada. Para realizar cambios en tu información, envía una solicitud de actualización.</p>
             </header>
+
+            <!-- Tarjeta de Perfil Principal -->
+            <section class="card" style="margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1.2rem;">
+                        <img id="perfil-avatar-img" src="/assets/user-profile.jpg" alt="Foto del Usuario" class="avatar" style="width: 75px; height: 75px; border-width: 4px;">
+                        <div>
+                            <h2 id="perfil-nombre" style="font-size: 1.4rem; color: var(--primary-dark); font-weight: 700;">Juan Pérez</h2>
+                            <p id="perfil-puesto-dept" style="color: var(--text-muted); font-size: 0.9rem;">Desarrollador Full Stack • Tecnología e Innovación</p>
+                            <span class="badge badge-success" style="margin-top: 4px;">Empleado Activo</span>
+                        </div>
+                    </div>
+
+                    <!-- Botón para solicitar actualización de datos (CLABE, teléfono, etc.) -->
+                    <button class="btn btn-accent" id="btn-solicitar-cambio-perfil" style="display: inline-flex; align-items: center; gap: 8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        Solicitar Actualización de Datos
+                    </button>
+                </div>
+
+                <!-- Rejilla de Datos del Perfil -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    <!-- Bloque 1: Datos Laborales -->
+                    <div style="background-color: #F8FAFC; padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <h3 style="font-size: 0.9rem; color: var(--primary-dark); font-weight: 700; text-transform: uppercase; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem;">INFORMACIÓN LABORAL</h3>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">No. de Empleado:</span><span class="cfdi-detail-value font-mono" id="perf-id">EP-4091</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Puesto:</span><span class="cfdi-detail-value" id="perf-puesto">Desarrollador Full Stack</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Departamento:</span><span class="cfdi-detail-value" id="perf-dept">Tecnología e Innovación</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Jefe Inmediato:</span><span class="cfdi-detail-value" id="perf-jefe">Ing. Carlos Mendoza</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Fecha de Ingreso:</span><span class="cfdi-detail-value" id="perf-ingreso">15/01/2022</span></div>
+                    </div>
+
+                    <!-- Bloque 2: Datos Fiscales y Personales -->
+                    <div style="background-color: #F8FAFC; padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <h3 style="font-size: 0.9rem; color: var(--primary-dark); font-weight: 700; text-transform: uppercase; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem;">DATOS PERSONALES Y FISCALES</h3>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">RFC:</span><span class="cfdi-detail-value font-mono" id="perf-rfc">PERJ920514HB8</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">CURP:</span><span class="cfdi-detail-value font-mono" id="perf-curp">PERJ920514HDFRRN09</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">NSS (IMSS):</span><span class="cfdi-detail-value font-mono" id="perf-imss">12948572019</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Correo Institucional:</span><span class="cfdi-detail-value" id="perf-email">juan.perez@eslabon.com</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Rol:</span><span class="cfdi-detail-value" id="perf-rol">Colaborador</span></div>
+                    </div>
+
+                    <!-- Bloque 3: Datos de Depósito de Nómina (Banco / CLABE) -->
+                    <div style="background-color: #F8FAFC; padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <h3 style="font-size: 0.9rem; color: var(--primary-dark); font-weight: 700; text-transform: uppercase; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem;">DEPOSITOS Y CUENTA BANCARIA</h3>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Cuenta / CLABE:</span><span class="cfdi-detail-value font-mono" id="perf-abono">BBVA - CLABE: 012180015928374910</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Periodicidad:</span><span class="cfdi-detail-value">Quincenal</span></div>
+                        <div class="cfdi-detail-row"><span class="cfdi-detail-label">Estatus Cuenta:</span><span class="badge badge-success">Verificada</span></div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
+    <!-- Script Controlador del Perfil -->
     <script type="module" src="/js/controllers/perfil.ctrl.js"></script>
 </body>
 

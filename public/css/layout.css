@@ -1,10 +1,6 @@
-/* =========================================
-   LAYOUT.CSS - Estructuras de las pantallas
-   ========================================= */
+/* Layout */
 
-
-/* --- Layout del Login --- */
-
+/* Auth Layout */
 .auth-layout {
     display: flex;
     justify-content: center;
@@ -13,17 +9,13 @@
     padding: 2rem;
 }
 
-
-/* --- Layout del Dashboard (Main) --- */
-
+/* Dashboard Layout */
 .dashboard-layout {
     display: flex;
     min-height: 100vh;
 }
 
-
-/* --- Sidebar --- */
-
+/* Sidebar */
 .sidebar {
     width: 260px;
     background-color: var(--bg-card);
@@ -103,9 +95,7 @@
     border-radius: 50%;
 }
 
-
-/* --- Contenido Principal (Evita superposición) --- */
-
+/* Main Content */
 .main-content {
     flex: 1;
     margin-left: 260px;
@@ -113,9 +103,7 @@
     width: calc(100% - 260px);
 }
 
-
-/* --- Header y Perfil --- */
-
+/* Header & Profile */
 .top-header {
     display: flex;
     justify-content: space-between;
@@ -160,14 +148,11 @@
     border-radius: 50%;
     border: 3px solid var(--accent-color);
     object-fit: cover;
-    /* Evita que la foto se deforme o aplaste */
     display: block;
     flex-shrink: 0;
 }
 
-
-/* --- Cuadrículas (Grids) --- */
-
+/* Grids */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -175,9 +160,7 @@
     margin-bottom: 2rem;
 }
 
-
-/* --- Menú Móvil (Fondo oscuro) --- */
-
+/* Mobile Menu */
 .menu-overlay {
     display: none;
     position: fixed;
@@ -205,25 +188,21 @@
     cursor: pointer;
 }
 
-.top-navbar {
+#navbar-container, .top-navbar {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    /* NUEVO: Lo fijamos arriba y le damos fondo blanco */
+    min-height: 68px;
     position: sticky;
     top: 0;
     background-color: var(--bg-card);
-    /* Fondo blanco */
     z-index: 900;
-    /* Para que quede por encima de las tarjetas al hacer scroll */
-    /* Expandimos la barra para que cubra todo el ancho del main-content */
     padding: 1rem 3rem;
     margin-top: -2rem;
     margin-left: -3rem;
     margin-right: -3rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--border-color);
-    /* Línea sutil para separar */
 }
 
 .page-header {
@@ -234,9 +213,7 @@
     display: none;
 }
 
-
-/* Contenedor del texto dentro de la alerta */
-
+/* Alerts Content */
 .alert-content {
     display: inline-flex;
     align-items: center;
@@ -246,18 +223,12 @@
     color: inherit;
 }
 
-
-/* Alineación vertical del icono y texto dentro del <strong> */
-
 .alert-content strong {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     color: inherit;
 }
-
-
-/* Tamaño y comportamiento del icono SVG */
 
 .alert-content svg {
     width: 1.2rem;
@@ -266,13 +237,10 @@
     stroke: currentColor;
 }
 
-
-/* --- RESPONSIVE DESIGN --- */
-
+/* Responsive */
 @media (max-width: 992px) {
     .top-navbar {
         justify-content: space-between;
-        /* Ajustamos el tamaño de la barra fija para móviles */
         padding: 1rem;
         margin-top: -1.5rem;
         margin-left: -1rem;
@@ -299,6 +267,5 @@
     }
     .mobile-logo {
         display: block;
-        /* Muestra el logo cuando estamos en móvil */
     }
 }

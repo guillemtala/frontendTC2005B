@@ -1,90 +1,72 @@
-const USERS_DB_KEY = 'eslabon_users_db';
-const SESSION_KEY = 'eslabon_active_session';
+import { API_BASE_URL, setSession, clearSession, getStoredUser, getToken } from '../config.js';
 
-// Usuarios de prueba iniciales
-const defaultUsers = [{
-        id: 'EP-4091',
-        name: 'Juan Pérez ',
-        email: 'juan.perez@eslabon.com',
-        password: 'password123',
-        role: 'Colaborador',
-        avatar: '/assets/user-profile.jpg?id=1'
-    },
-    {
-        id: 'EP-4092',
-        name: 'María López R.',
-        email: 'maria.lopez@eslabon.com',
-        password: 'password456',
-        role: 'Colaborador',
-        avatar: '/assets/default-user.png?id=2'
-    }
-];
-
-// Función interna de inicialización segura
-function initializeDatabase() {
-    const stored = localStorage.getItem(USERS_DB_KEY);
-    if (!stored) {
-        localStorage.setItem(USERS_DB_KEY, JSON.stringify(defaultUsers));
-        return;
-    }
-
-    const currentUsers = JSON.parse(stored);
-    let updated = false;
-
-    defaultUsers.forEach(defUser => {
-        if (!currentUsers.some(u => u.id === defUser.id)) {
-            currentUsers.push(defUser);
-            updated = true;
+export function resolveLocalAvatar(avatarStr, identifier) {
+    if (avatarStr && typeof avatarStr === 'string') {
+        if (avatarStr.includes('default-user')) {
+            return '/assets/default-user.png';
         }
-    });
-
-    if (updated) {
-        localStorage.setItem(USERS_DB_KEY, JSON.stringify(currentUsers));
+        if (avatarStr.includes('user-profile')) {
+            return '/assets/user-profile.jpg';
+        }
     }
+    const str = String(identifier || '').toLowerCase();
+    if (str.includes('4092') || str.includes('maria') || str.includes('maría')) {
+        return '/assets/default-user.png';
+    }
+    if (str.includes('4091') || str.includes('juan')) {
+        return '/assets/user-profile.jpg';
+    }
+    return '/assets/default-user.png';
 }
 
-// Inicializar de inmediato al cargar el módulo
-initializeDatabase();
-
 export const AuthModel = {
-    // Comprobación de sesión activa (síncrona)
     getCurrentUser() {
-        const session = localStorage.getItem(SESSION_KEY);
-        return session ? JSON.parse(session) : null;
+        return getStoredUser();
     },
 
-    // Cierre de sesión (síncrono)
+    getAuthToken() {
+        return getToken();
+    },
+
     logout() {
-        localStorage.removeItem(SESSION_KEY);
+        clearSession();
+        localStorage.removeItem('eslabon_2fa_verified');
     },
 
-    // Inicio de sesión
     async login(email, password) {
-        initializeDatabase();
+        try {
+            const response = await fetch(`${API_BASE_URL}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email.trim(), password })
+            });
 
-        // Simula una breve latencia de red
-        await new Promise(resolve => setTimeout(resolve, 200));
+            const data = await response.json();
 
-        const users = JSON.parse(localStorage.getItem(USERS_DB_KEY) || '[]');
-        const user = users.find(
-            u => u.email.toLowerCase() === email.trim().toLowerCase() && u.password === password
-        );
+            if (!response.ok) {
+                const errorMessage = data && data.message ? data.message : 'Correo electrónico o contraseña incorrectos.';
+                throw new Error(errorMessage);
+            }
 
-        if (!user) {
-            throw new Error('Correo electrónico o contraseña incorrectos.');
+            const token = data.token || data.accessToken || `token-${Date.now()}`;
+            const rawUser = data.user || data.usuario || data;
+            const userId = rawUser.id || rawUser.no_empleado || 'EP-4091';
+
+            const user = {
+                id: userId,
+                name: rawUser.nombre || rawUser.name || 'Juan Pérez',
+                email: rawUser.email || email,
+                role: rawUser.rol || rawUser.role || 'Colaborador',
+                avatar: resolveLocalAvatar(rawUser.avatar || rawUser.foto, userId || email)
+            };
+
+            setSession(token, user);
+            return { token, user };
+        } catch (error) {
+            console.error('Error en autenticación:', error);
+            throw error;
         }
-
-        const sessionData = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            avatar: user.avatar || '/assets/default-user.png?id=default',
-            token: `fake-jwt-token-${Date.now()}`
-        };
-        localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-
-        localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-        return sessionData;
     }
 };

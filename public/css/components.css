@@ -1,10 +1,6 @@
-/* =========================================
-   COMPONENTS.CSS - Tarjetas, Botones, Inputs, Textos
-   ========================================= */
+/* Componentes */
 
-
-/* --- Tarjetas (Cards) --- */
-
+/* Tarjetas */
 .card {
     background-color: var(--bg-card);
     border-radius: 12px;
@@ -21,9 +17,7 @@
     background: transparent;
 }
 
-
-/* --- Tipografía --- */
-
+/* Tipografía */
 .title-primary {
     color: var(--primary-dark);
     font-size: 1.75rem;
@@ -37,9 +31,7 @@
     margin-bottom: 2rem;
 }
 
-
-/* --- Formularios --- */
-
+/* Formularios */
 .form-group {
     margin-bottom: 1.5rem;
     text-align: left;
@@ -60,9 +52,7 @@
     box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.15);
 }
 
-
-/* --- Botones --- */
-
+/* Botones */
 .btn {
     display: inline-block;
     padding: 0.8rem 1.5rem;
@@ -106,9 +96,7 @@
     font-size: 0.85rem;
 }
 
-
-/* --- Enlaces --- */
-
+/* Enlaces */
 .link-forgot {
     color: var(--text-main);
     font-weight: 700;
@@ -116,9 +104,7 @@
     font-size: 0.95rem;
 }
 
-
-/* --- Alertas Urgentes (UX) --- */
-
+/* Alertas */
 .alert {
     display: flex;
     justify-content: space-between;
@@ -138,9 +124,7 @@
     font-size: 0.95rem;
 }
 
-
-/* --- Dropdown (Campana de Notificaciones) --- */
-
+/* Dropdown */
 .dropdown {
     position: relative;
 }
@@ -220,10 +204,6 @@
     background-color: #F0F4F8;
 }
 
-.dropdown-item:hover {
-    background-color: #F0F4F8;
-}
-
 .notif-title {
     font-weight: 600;
     font-size: 0.9rem;
@@ -235,9 +215,7 @@
     color: var(--text-muted);
 }
 
-
-/* --- Grid de 3 Tarjetas (Stats) --- */
-
+/* Tarjetas Estadísticas */
 .stat-card {
     display: flex;
     flex-direction: column;
@@ -269,9 +247,7 @@
     padding-top: 1rem;
 }
 
-
-/* --- Grid de 6 Tarjetas (Acciones) --- */
-
+/* Grid Acciones */
 .action-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -317,11 +293,7 @@
     line-height: 1.4;
 }
 
-
-/* =========================================
-   COMPONENTE: KÁRDEX CALENDARIO DE ASISTENCIA
-   ========================================= */
-
+/* Calendario */
 .calendar-section {
     display: flex;
     flex-direction: column;
@@ -392,9 +364,6 @@
     gap: 12px;
 }
 
-
-/* Casillas de los días */
-
 .cal-day {
     aspect-ratio: 1 / 1;
     border-radius: 12px;
@@ -407,39 +376,24 @@
     transition: transform 0.15s;
 }
 
-
-/* Estado: Día neutro / sin registro */
-
 .cal-day.default {
     background-color: #F8FAFC;
     color: var(--primary-dark);
 }
-
-
-/* Estado: Asistió (Verde esmeralda / Turquesa del mockup) */
 
 .cal-day.attended {
     background-color: #00B894;
     color: #FFFFFF;
 }
 
-
-/* Estado: No asistió / Falta (Rojo coral del mockup) */
-
 .cal-day.missed {
     background-color: #FF5252;
     color: #FFFFFF;
 }
 
-
-/* Días fuera del mes actual */
-
 .cal-day.other-month {
     opacity: 0.4;
 }
-
-
-/* Leyenda del calendario */
 
 .calendar-legend {
     display: flex;
@@ -471,9 +425,6 @@
 .legend-dot.missed {
     background-color: #FF5252;
 }
-
-
-/* Botones de marcación inferiores */
 
 .attendance-actions {
     display: flex;
@@ -514,3 +465,906 @@
 .btn-clock:disabled:hover {
     background-color: #94A3B8;
 }
+
+/* Tablas y Acciones Nómina */
+.payroll-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filters-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.select-filter {
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    color: var(--text-main);
+    background-color: var(--bg-card);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.select-filter:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.15);
+}
+
+.search-filter-wrapper {
+    position: relative;
+    min-width: 220px;
+}
+
+.search-filter-input {
+    width: 100%;
+    padding: 0.65rem 1rem 0.65rem 2.4rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-filter-input:focus {
+    border-color: var(--accent-color);
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+/* Tabla de Nóminas */
+.table-card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.92rem;
+}
+
+.data-table th {
+    background-color: #F8FAFC;
+    color: var(--primary-dark);
+    font-weight: 600;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 1.1rem 1.2rem;
+    border-bottom: 1px solid #F1F5F9;
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+.data-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: #F8FAFC;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-mono {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.88rem;
+}
+
+.amount-net {
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.amount-positive {
+    color: #059669;
+    font-weight: 600;
+}
+
+.amount-negative {
+    color: #DC2626;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.3rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-success {
+    background-color: #DCFCE7;
+    color: #15803D;
+}
+
+.badge-info {
+    background-color: #E0F2FE;
+    color: #0369A1;
+}
+
+.badge-warning {
+    background-color: #FEF3C7;
+    color: #B45309;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.btn-table-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background-color: #FFFFFF;
+    color: var(--primary-dark);
+    transition: all 0.2s ease;
+}
+
+.btn-table-action:hover {
+    background-color: var(--primary-dark);
+    color: #FFFFFF;
+    border-color: var(--primary-dark);
+}
+
+.btn-table-action.btn-download {
+    background-color: var(--accent-light);
+    color: #00897B;
+    border-color: rgba(0, 184, 148, 0.3);
+}
+
+.btn-table-action.btn-download:hover {
+    background-color: var(--accent-color);
+    color: #FFFFFF;
+    border-color: var(--accent-color);
+}
+
+/* Modal Recibo Nómina */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-container {
+    background-color: var(--bg-card);
+    width: 100%;
+    max-width: 860px;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.25s ease;
+}
+
+.modal-backdrop.show .modal-container {
+    transform: translateY(0) scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.75rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #F8FAFC;
+}
+
+.modal-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-close-modal {
+    background: transparent;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-close-modal:hover {
+    background-color: #E2E8F0;
+    color: var(--text-main);
+}
+
+.modal-body {
+    padding: 1.75rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: 1rem 1.75rem;
+    border-top: 1px solid var(--border-color);
+    background-color: #F8FAFC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Recibo CFDI */
+.cfdi-paper {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    color: #1E293B;
+    font-size: 0.84rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.cfdi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--primary-dark);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
+    gap: 1rem;
+}
+
+.cfdi-company-info h2 {
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    font-weight: 800;
+    margin-bottom: 0.15rem;
+}
+
+.cfdi-company-info p {
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 0.1rem;
+}
+
+.cfdi-badge-box {
+    text-align: right;
+    background-color: #F1F5F9;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+}
+
+.cfdi-voucher-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.15rem;
+}
+
+.cfdi-folio {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.cfdi-grid-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    background-color: #F8FAFC;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+}
+
+.cfdi-box-section h4 {
+    font-size: 0.78rem;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    border-bottom: 1px solid #CBD5E1;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+}
+
+.cfdi-detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.18rem;
+    font-size: 0.8rem;
+}
+
+.cfdi-detail-label {
+    color: #64748B;
+    font-weight: 500;
+}
+
+.cfdi-detail-value {
+    color: #0F172A;
+    font-weight: 600;
+    text-align: right;
+}
+
+.cfdi-tables-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.cfdi-tables-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.cfdi-table-wrapper {
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cfdi-table-title {
+    background-color: var(--primary-dark);
+    color: #FFFFFF;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.cfdi-table-title.deducciones {
+    background-color: #475569;
+}
+
+.cfdi-table-title.informativos {
+    background-color: #0D9488;
+}
+
+.cfdi-mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+}
+
+.cfdi-mini-table th {
+    background-color: #F1F5F9;
+    color: #334155;
+    padding: 0.35rem 0.5rem;
+    font-weight: 600;
+    border-bottom: 1px solid #E2E8F0;
+    text-align: left;
+}
+
+.cfdi-mini-table td {
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid #F1F5F9;
+    color: #1E293B;
+}
+
+.cfdi-total-row {
+    background-color: #F8FAFC;
+    font-weight: 700;
+}
+
+.cfdi-summary-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #2B6CB0 100%);
+    color: #FFFFFF;
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.cfdi-summary-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.cfdi-summary-label {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.cfdi-summary-val {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.cfdi-net-box {
+    text-align: right;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cfdi-net-val {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #6EE7B7;
+}
+
+.cfdi-sat-section {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    border-top: 1px dashed #CBD5E1;
+    padding-top: 1.2rem;
+    background-color: #FAFBFD;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.cfdi-qr-box {
+    width: 90px;
+    height: 90px;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 4px;
+}
+
+.cfdi-qr-box svg {
+    width: 100%;
+    height: 100%;
+}
+
+.cfdi-sat-stamps {
+    flex: 1;
+    font-size: 0.7rem;
+    color: #64748B;
+    overflow: hidden;
+}
+
+.cfdi-stamp-title {
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 0.15rem;
+    font-size: 0.72rem;
+}
+
+.cfdi-stamp-code {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    word-break: break-all;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+    background: #EDF2F7;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* Impresión */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .sidebar, .top-navbar, .page-header, .payroll-controls, .stats-grid, .modal-header, .modal-footer, .btn, .btn-close-modal {
+        display: none !important;
+    }
+
+    .modal-backdrop {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        background: white !important;
+        visibility: visible;
+        padding: 0;
+    }
+
+    .modal-container {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        transform: none !important;
+    }
+
+    .modal-body {
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    .cfdi-paper, .cfdi-paper * {
+        visibility: visible !important;
+    }
+
+    .cfdi-paper {
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .cfdi-summary-banner {
+        background: #1A365D !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+@media (max-width: 768px) {
+    .cfdi-grid-details, .cfdi-tables-grid {
+        grid-template-columns: 1fr;
+    }
+    .cfdi-summary-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+    .cfdi-net-box {
+        width: 100%;
+        text-align: left;
+    }
+    .cfdi-header {
+        flex-direction: column;
+    }
+    .cfdi-badge-box {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/* Kardex y Asistencia */
+.kardex-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.clock-live-card {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #2B6CB0 100%);
+    color: #FFFFFF;
+    border-radius: 16px;
+    padding: 1.8rem;
+    box-shadow: 0 10px 25px -5px rgba(26, 54, 93, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.clock-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.live-time-display {
+    font-size: 2.8rem;
+    font-weight: 800;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    letter-spacing: 1px;
+    margin: 0.4rem 0;
+}
+
+.time-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1.2rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.time-meta-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.time-meta-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 0.2rem;
+}
+
+.time-meta-val {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.weekly-breakdown-card {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.8rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+}
+
+.weekly-bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 1.2rem;
+}
+
+.weekly-bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.weekly-bar-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.progress-track {
+    width: 100%;
+    height: 10px;
+    background-color: #E2E8F0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+.progress-fill.overtime {
+    background-color: #3B82F6;
+}
+
+@media (max-width: 992px) {
+    .kardex-main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-tab-solicitud {
+    background-color: #F1F5F9;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-tab-solicitud:hover {
+    background-color: #E2E8F0;
+    color: var(--primary-dark);
+}
+
+.btn-tab-solicitud.active {
+    background-color: var(--primary-dark);
+    color: #FFFFFF;
+    border-color: var(--primary-dark);
+}
+
+.badge-danger {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
+/* Modo Oscuro */
+body.dark-mode .dropdown-menu {
+    background-color: #1E293B;
+    border-color: #334155;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .dropdown-header {
+    background-color: #0F172A;
+    border-color: #334155;
+    color: #60A5FA;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: #334155;
+}
+
+body.dark-mode .sidebar {
+    background-color: #1E293B;
+    border-color: #334155;
+}
+
+body.dark-mode .sidebar-link {
+    color: #CBD5E1;
+}
+
+body.dark-mode .sidebar-link:hover {
+    background-color: #334155;
+}
+
+body.dark-mode .top-navbar {
+    background-color: #1E293B;
+    border-color: #334155;
+}
+
+body.dark-mode .data-table th {
+    background-color: #0F172A;
+    color: #60A5FA;
+    border-color: #334155;
+}
+
+body.dark-mode .data-table td {
+    border-color: #334155;
+    color: #F1F5F9;
+}
+
+body.dark-mode .data-table tbody tr:hover {
+    background-color: rgba(51, 65, 85, 0.5);
+}
+
+body.dark-mode .btn-table-action {
+    background-color: #1E293B;
+    color: #F1F5F9;
+    border-color: #334155;
+}
+
+body.dark-mode .btn-table-action:hover {
+    background-color: #60A5FA;
+    color: #0F172A;
+}
+
+body.dark-mode .select-filter, body.dark-mode .search-filter-input, body.dark-mode .form-input {
+    background-color: #0F172A;
+    color: #F1F5F9;
+    border-color: #334155;
+}
+
+body.dark-mode .modal-container, body.dark-mode .modal-header, body.dark-mode .modal-footer {
+    background-color: #1E293B;
+    border-color: #334155;
+}
+
+body.dark-mode .cfdi-paper {
+    background-color: #0F172A;
+    border-color: #334155;
+    color: #F1F5F9;
+}
+
+body.dark-mode .cfdi-company-info p, body.dark-mode .cfdi-detail-label {
+    color: #94A3B8;
+}
+
+body.dark-mode .cfdi-detail-value {
+    color: #F8FAFC;
+}
+
+body.dark-mode .cfdi-grid-details, body.dark-mode .cfdi-badge-box {
+    background-color: #1E293B;
+    border-color: #334155;
+}
+
+body.dark-mode .cfdi-mini-table th {
+    background-color: #1E293B;
+    color: #CBD5E1;
+    border-color: #334155;
+}
+
+body.dark-mode .cfdi-mini-table td {
+    border-color: #334155;
+    color: #F1F5F9;
+}
+
+body.dark-mode .cal-day.default {
+    background-color: #0F172A;
+    color: #F1F5F9;
+}
+
+body.dark-mode .calendar-wrapper, body.dark-mode .weekly-breakdown-card {
+    background-color: #1E293B;
+    border-color: #334155;
+}
+
+body.dark-mode .btn-tab-solicitud {
+    background-color: #0F172A;
+    color: #94A3B8;
+    border-color: #334155;
+}
+
+body.dark-mode .btn-tab-solicitud.active {
+    background-color: #60A5FA;
+    color: #0F172A;
+}
+
+
+
+

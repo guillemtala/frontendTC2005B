@@ -9,31 +9,158 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <meta name="apple-mobile-web-app-title" content="Portal RH" />
+
+    <script>(function(){if(localStorage.getItem("eslabon_theme_preference")==="dark"){document.documentElement.classList.add("dark-mode");}})();</script>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/components.css">
+
+    <!-- Librería html2pdf.js para exportar recibos a PDF directo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
     <div class="dashboard-layout">
         <div class="menu-overlay" id="menu-overlay"></div>
 
-        <!-- Inyectado por JS -->
+        <!-- Sidebar Inyectado por JS -->
         <div id="sidebar-container"></div>
 
         <main class="main-content">
-            <!-- Inyectado por JS -->
+            <!-- Top Navbar Inyectada por JS -->
             <div id="navbar-container"></div>
 
-            <!-- Contenido específico de esta sección -->
+            <!-- Encabezado de la Sección -->
             <header class="page-header">
-                <h1 class="title-primary">Nómina</h1>
-                <p class="subtitle">Consulta tu información de nómina y pagos.</p>
+                <h1 class="title-primary">Nómina y Recibos de Pago</h1>
+                <p class="subtitle">Consulta tu historial de recibos timbrados CFDI 4.0 (México), revisa el desglose de percepciones y deducciones, o descarga tus comprobantes en PDF.</p>
             </header>
+
+            <!-- Tarjetas de Resumen (KPIs) -->
+            <section class="stats-grid">
+                <div class="card stat-card">
+                    <div>
+                        <div class="stat-title">Último Pago Neto</div>
+                        <div class="stat-value" id="kpi-ultimo-pago">$0.00</div>
+                    </div>
+                    <div class="stat-footer">
+                        <span id="kpi-fecha-pago" style="font-size: 0.85rem; color: var(--text-muted);">Pago del --/--/----</span>
+                        <span class="badge badge-success">Reciente</span>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div>
+                        <div class="stat-title">Percepciones Acumuladas (Año Actual)</div>
+                        <div class="stat-value" id="kpi-percepciones" style="color: #059669;">$0.00</div>
+                    </div>
+                    <div class="stat-footer">
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Sueldo + Vales + PTU</span>
+                        <span class="badge badge-info">SAT México</span>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div>
+                        <div class="stat-title">Deducciones Acumuladas (ISR / IMSS)</div>
+                        <div class="stat-value" id="kpi-deducciones" style="color: #DC2626;">$0.00</div>
+                    </div>
+                    <div class="stat-footer">
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Retenciones de ley</span>
+                        <span class="badge badge-warning">Oficial</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filtros y Controles -->
+            <section class="payroll-controls">
+                <div class="filters-group">
+                    <label for="select-filter-anio" style="font-size: 0.9rem; font-weight: 600; color: var(--primary-dark);">Filtrar por:</label>
+                    <select id="select-filter-anio" class="select-filter">
+                        <option value="all">Todos los años</option>
+                        <option value="2026" selected>Año 2026</option>
+                        <option value="2025">Año 2025</option>
+                    </select>
+
+                    <select id="select-filter-mes" class="select-filter">
+                        <option value="all" selected>Todos los meses</option>
+                        <option value="8">Agosto</option>
+                        <option value="7">Julio</option>
+                        <option value="6">Junio</option>
+                        <option value="5">Mayo (PTU)</option>
+                    </select>
+
+                    <div class="search-filter-wrapper">
+                        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="input-filter-search" class="search-filter-input" placeholder="Buscar por período o folio...">
+                    </div>
+                </div>
+
+                <div id="record-counter" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">
+                    Cargando recibos...
+                </div>
+            </section>
+
+            <!-- Tabla de Recibos de Nómina -->
+            <section class="table-card">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Período / Folio</th>
+                                <th>Fecha de Pago</th>
+                                <th class="text-center">Sueldo Diario</th>
+                                <th class="text-right">Total Percepciones</th>
+                                <th class="text-right">Total Deducciones</th>
+                                <th class="text-right">Percepción Neta</th>
+                                <th class="text-center">Estatus</th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nomina-table-body">
+                            <!-- Los recibos se inyectan dinámicamente con JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </main>
     </div>
 
+    <!-- Modal de Recibo de Nómina -->
+    <div class="modal-backdrop" id="modal-cfdi-backdrop">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    Detalle del Recibo de Nómina
+                </div>
+                <button class="btn-close-modal" id="btn-close-modal" title="Cerrar ventana">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <div class="modal-body" id="cfdi-paper-content">
+                <!-- Se inyecta el contenido oficial del recibo con JS -->
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-outline btn-sm" id="btn-cancel-modal">Cerrar</button>
+                <div style="display: flex; gap: 0.8rem;">
+                    <button class="btn btn-outline btn-sm" id="btn-print-modal" title="Imprimir este recibo">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        Imprimir
+                    </button>
+                    <button class="btn btn-accent btn-sm" id="btn-download-modal" title="Descargar PDF oficial">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: middle; margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Descargar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Controlador de Nómina -->
     <script type="module" src="/js/controllers/nomina.ctrl.js"></script>
 </body>
 

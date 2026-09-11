@@ -1,19 +1,24 @@
 import { initLayout } from './layout.ctrl.js';
 import { AttendanceModel } from '../models/attendance.model.js';
 
-// Fecha inicial fijada a Septiembre 2026 (mes 8 = septiembre)
 let currentDate = new Date(2026, 8, 1);
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificación síncrona de sesión
     const user = initLayout('kardex');
     if (!user) return;
 
-    // 5. Renderizar calendario y botones
+    // Reloj digital
+    startLiveClock();
+
+    // KPIs
+    renderKPIs();
+
+    // Calendario y bitácora
     renderCalendar(currentDate);
+    renderDetailedTable();
     updateButtonStates();
 
-    // 6. Controles de mes
+    // Navegación de mes
     const prevBtn = document.getElementById('cal-prev-month');
     const nextBtn = document.getElementById('cal-next-month');
 
@@ -31,27 +36,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 7. Eventos de marcado
+    // Botones entrada/salida (Clickeables demostrativos)
     const checkInBtn = document.getElementById('btn-checkin');
     const checkOutBtn = document.getElementById('btn-checkout');
 
     if (checkInBtn) {
         checkInBtn.addEventListener('click', () => {
-            const todayKey = getTodayKey();
-            AttendanceModel.recordCheckIn(todayKey);
-            renderCalendar(currentDate);
-            updateButtonStates();
+            alert('¡Asistencia (Entrada) marcada exitosamente a las 08:00 AM!');
         });
     }
 
     if (checkOutBtn) {
         checkOutBtn.addEventListener('click', () => {
-            const todayKey = getTodayKey();
-            AttendanceModel.recordCheckOut(todayKey);
-            updateButtonStates();
+            alert('¡Salida marcada exitosamente a las 06:00 PM!');
         });
     }
 });
+
+function startLiveClock() {
+    const clockTimeEl = document.getElementById('live-clock-time');
+    const clockDateEl = document.getElementById('live-clock-date');
+
+    const update = () => {
+        const now = new Date();
+        if (clockTimeEl) {
+            clockTimeEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        if (clockDateEl) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            clockDateEl.textContent = now.toLocaleDateString('es-MX', options);
+        }
+    };
+
+    update();
+    setInterval(update, 1000);
+}
+
+function renderKPIs() {
+    const stats = AttendanceModel.getStatsTiempoLaborado();
+
+    const kpiHoras = document.getElementById('kpi-horas-laboradas');
+    const kpiTasa = document.getElementById('kpi-tasa-asistencia');
+    const kpiExtra = document.getElementById('kpi-horas-extra');
+    const kpiPromedio = document.getElementById('kpi-promedio-entrada');
+
+    if (kpiHoras) kpiHoras.textContent = `${stats.horasTotales.toFixed(1)} hrs`;
+    if (kpiTasa) kpiTasa.textContent = `${stats.tasaAsistencia}%`;
+    if (kpiExtra) kpiExtra.textContent = `${stats.horasExtra.toFixed(1)} hrs`;
+    if (kpiPromedio) kpiPromedio.textContent = stats.promedioEntrada;
+}
 
 function renderCalendar(date) {
     const container = document.getElementById('cal-days-container');
@@ -59,7 +92,6 @@ function renderCalendar(date) {
     if (!container || !title) return;
 
     const records = AttendanceModel.getAllRecords() || {};
-
     const year = date.getFullYear();
     const month = date.getMonth();
 
@@ -71,14 +103,11 @@ function renderCalendar(date) {
 
     container.innerHTML = '';
 
-    // Cálculo del desfase de días de la semana (Lunes = 0, Domingo = 6)
     const firstDayIndex = new Date(year, month, 1).getDay();
     const startingDay = (firstDayIndex === 0 ? 6 : firstDayIndex - 1);
-
     const totalDays = new Date(year, month + 1, 0).getDate();
     const prevMonthTotalDays = new Date(year, month, 0).getDate();
 
-    // 1. Días del mes previo
     for (let i = startingDay - 1; i >= 0; i--) {
         const dayNum = prevMonthTotalDays - i;
         const prevDate = new Date(year, month - 1, dayNum);
@@ -86,14 +115,12 @@ function renderCalendar(date) {
         container.appendChild(createDayCell(dayNum, records[key] || 'default other-month'));
     }
 
-    // 2. Días del mes en curso
     for (let day = 1; day <= totalDays; day++) {
         const thisDate = new Date(year, month, day);
         const key = formatDateKey(thisDate);
         container.appendChild(createDayCell(day, records[key] || 'default'));
     }
 
-    // 3. Casillas sobrantes para completar la cuadrícula (hasta 35 o 42 casillas)
     const totalRendered = startingDay + totalDays;
     const targetTotal = totalRendered > 35 ? 42 : 35;
     const remainingCells = targetTotal - totalRendered;
@@ -112,6 +139,74 @@ function createDayCell(dayNumber, statusClass) {
     return cell;
 }
 
+function renderDetailedTable() {
+    const tableBody = document.getElementById('detailed-attendance-table-body');
+    if (!tableBody) return;
+
+    const logs = AttendanceModel.getDetailedLogs();
+
+    if (logs.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center" style="padding: 2rem; color: var(--text-muted);">
+                    No hay registros de asistencia en la bitácora.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tableBody.innerHTML = logs.map(log => {
+        let badgeClass = 'badge-success';
+        if (log.estado === 'Retardo') badgeClass = 'badge-warning';
+        if (log.estado === 'Falta') badgeClass = 'badge-danger';
+
+        return `
+            <tr>
+                <td>
+                    <div style="font-weight: 700; color: var(--primary-dark);">${log.dia} ${log.fecha}</div>
+                </td>
+                <td class="text-center font-mono">${log.entrada}</td>
+                <td class="text-center font-mono">${log.salida}</td>
+                <td class="text-center font-mono">${log.ordinarias ? log.ordinarias.toFixed(1) : '0.0'} hrs</td>
+                <td class="text-center font-mono" style="color: #2563EB;">${log.extra ? log.extra.toFixed(1) : '0.0'} hrs</td>
+                <td class="text-center font-mono" style="font-weight: 700;">${log.total ? log.total.toFixed(1) : '0.0'} hrs</td>
+                <td style="font-size: 0.85rem; color: var(--text-muted);">${log.metodo}</td>
+                <td class="text-center">
+                    <span class="badge ${badgeClass}">
+                        ${log.estado}
+                    </span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function updateButtonStates() {
+    const checkInBtn = document.getElementById('btn-checkin');
+    const checkOutBtn = document.getElementById('btn-checkout');
+    const metaCheckIn = document.getElementById('time-meta-checkin');
+    const metaCheckOut = document.getElementById('time-meta-checkout');
+    const badgeTurno = document.getElementById('badge-turno-status');
+
+    if (checkInBtn) {
+        checkInBtn.disabled = false;
+        checkInBtn.style.cursor = 'pointer';
+    }
+
+    if (checkOutBtn) {
+        checkOutBtn.disabled = false;
+        checkOutBtn.style.cursor = 'pointer';
+    }
+
+    if (metaCheckIn) metaCheckIn.textContent = '08:00 AM';
+    if (metaCheckOut) metaCheckOut.textContent = '06:00 PM';
+    if (badgeTurno) {
+        badgeTurno.textContent = 'En Turno';
+        badgeTurno.style.backgroundColor = '#10B981';
+    }
+}
+
 function formatDateKey(dateObj) {
     const y = dateObj.getFullYear();
     const m = String(dateObj.getMonth() + 1).padStart(2, '0');
@@ -122,78 +217,4 @@ function formatDateKey(dateObj) {
 function getTodayKey() {
     const now = new Date();
     return `2026-09-${String(now.getDate()).padStart(2, '0')}`;
-}
-
-function updateButtonStates() {
-    const checkInBtn = document.getElementById('btn-checkin');
-    const checkOutBtn = document.getElementById('btn-checkout');
-    if (!checkInBtn || !checkOutBtn) return;
-
-    const todayKey = getTodayKey();
-    const todayStatus = AttendanceModel.getTodayStatus(todayKey);
-
-    if (!todayStatus) {
-        checkInBtn.disabled = false;
-        checkInBtn.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-      Marcar asistencia
-    `;
-        checkOutBtn.disabled = true;
-        checkOutBtn.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-      Marcar hora de salida
-    `;
-    } else if (!todayStatus.checkOutTime) {
-        checkInBtn.disabled = true;
-        checkInBtn.textContent = `Entrada: ${todayStatus.checkInTime}`;
-        checkOutBtn.disabled = false;
-    } else {
-        checkInBtn.disabled = true;
-        checkInBtn.textContent = `Entrada: ${todayStatus.checkInTime}`;
-        checkOutBtn.disabled = true;
-        checkOutBtn.textContent = `Salida: ${todayStatus.checkOutTime}`;
-    }
-}
-
-function setupGlobalInteractions() {
-    const bellBtn = document.getElementById('btn-notifications');
-    const dropdownMenu = document.getElementById('dropdown-notifications');
-    const btnMenu = document.getElementById('btn-menu');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('menu-overlay');
-
-    if (bellBtn && dropdownMenu) {
-        bellBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (dropdownMenu.classList.contains('show') && !dropdownMenu.contains(e.target) && e.target !== bellBtn) {
-                dropdownMenu.classList.remove('show');
-            }
-        });
-    }
-
-    if (btnMenu && sidebar && overlay) {
-        const toggleSidebar = () => {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
-        };
-        btnMenu.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-    }
-}
-
-function renderUserProfile(user) {
-    const nameEl = document.getElementById('user-display-name');
-    const roleEl = document.getElementById('user-display-role');
-    const avatarEl = document.getElementById('user-display-avatar');
-
-    if (nameEl) nameEl.textContent = user.name;
-    if (roleEl) roleEl.textContent = `Nómina: #${user.id} • ${user.role}`;
-    if (avatarEl && user.avatar) {
-        avatarEl.src = user.avatar;
-        avatarEl.alt = `Foto de perfil de ${user.name}`;
-    }
 }
