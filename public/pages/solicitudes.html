@@ -11,7 +11,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Portal RH" />
 
-    <script>(function(){if(localStorage.getItem("eslabon_theme_preference")==="dark"){document.documentElement.classList.add("dark-mode");}})();</script>
+    <script>
+        (function() {
+            if (localStorage.getItem("eslabon_theme_preference") === "dark") {
+                document.documentElement.classList.add("dark-mode");
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/components.css">
@@ -21,22 +27,19 @@
     <div class="dashboard-layout">
         <div class="menu-overlay" id="menu-overlay"></div>
 
-        <!-- Sidebar inyectado por JS -->
         <div id="sidebar-container"></div>
 
         <main class="main-content">
-            <!-- Top Navbar inyectada por JS -->
+
             <div id="navbar-container"></div>
 
-            <!-- Encabezado de la Sección -->
             <header class="page-header">
                 <h1 class="title-primary">Centro Unificado de Solicitudes</h1>
                 <p class="subtitle">Gestiona tus trámites laborales en un solo lugar. Puedes solicitar Vacaciones, Préstamos personales o la Actualización de tus Datos Generales y Bancarios.</p>
             </header>
 
-            <!-- Tarjetas de Acceso Rápido para Crear Solicitudes (3 Tipos Permitidos) -->
             <section class="action-grid" style="margin-bottom: 2rem;">
-                <!-- 1. Vacaciones -->
+                
                 <div class="card action-card" id="card-new-vacaciones" style="border-top: 4px solid #059669;">
                     <div class="action-icon" style="background-color: #ECFDF5; color: #059669;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -46,7 +49,6 @@
                     <button class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; border-color: #059669; color: #059669;">Crear Solicitud</button>
                 </div>
 
-                <!-- 2. Préstamos -->
                 <div class="card action-card" id="card-new-prestamo" style="border-top: 4px solid #2563EB;">
                     <div class="action-icon" style="background-color: #EFF6FF; color: #2563EB;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
@@ -56,7 +58,6 @@
                     <button class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; border-color: #2563EB; color: #2563EB;">Crear Solicitud</button>
                 </div>
 
-                <!-- 3. Actualización de Datos -->
                 <div class="card action-card" id="card-new-datos" style="border-top: 4px solid #0D9488;">
                     <div class="action-icon" style="background-color: #F0FDF4; color: #0D9488;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -67,7 +68,6 @@
                 </div>
             </section>
 
-            <!-- Filtros e Historial de Solicitudes -->
             <section class="payroll-controls">
                 <div class="filters-group">
                     <label for="select-filter-tipo" style="font-size: 0.9rem; font-weight: 600; color: var(--primary-dark);">Filtrar por:</label>
@@ -91,7 +91,6 @@
                 </div>
             </section>
 
-            <!-- Tabla de Historial -->
             <section class="table-card">
                 <div class="table-responsive">
                     <table class="data-table">
@@ -105,7 +104,7 @@
                             </tr>
                         </thead>
                         <tbody id="solicitudes-table-body">
-                            <!-- Inyectado por JS -->
+                            
                         </tbody>
                     </table>
                 </div>
@@ -113,13 +112,11 @@
         </main>
     </div>
 
-    <!-- Modal para Crear Nueva Solicitud (Con Pestañas) -->
     <div class="modal-backdrop" id="modal-nueva-solicitud-backdrop">
         <div class="modal-container" style="max-width: 650px;">
             <div class="modal-header">
                 <div class="modal-title">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                    Nueva Solicitud Laboral
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>                    Nueva Solicitud Laboral
                 </div>
                 <button class="btn-close-modal" id="btn-close-create-modal" title="Cerrar ventana">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -127,14 +124,13 @@
             </div>
 
             <div class="modal-body">
-                <!-- Selector de Pestañas Tipo de Solicitud -->
+                
                 <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); pb-2;">
                     <button class="btn btn-sm btn-tab-solicitud active" data-tab="vacaciones" id="tab-btn-vacaciones">1. Vacaciones</button>
                     <button class="btn btn-sm btn-tab-solicitud" data-tab="prestamos" id="tab-btn-prestamos">2. Préstamos</button>
                     <button class="btn btn-sm btn-tab-solicitud" data-tab="actualizacion_datos" id="tab-btn-datos">3. Actualización de Datos</button>
                 </div>
 
-                <!-- Formulario 1: Vacaciones -->
                 <form id="form-solicitud-vacaciones" class="form-solicitud-pane">
                     <div style="background-color: #ECFDF5; padding: 0.8rem 1rem; border-radius: 8px; color: #065F46; font-size: 0.85rem; margin-bottom: 1.2rem;">
                         <strong>Saldo de vacaciones:</strong> Tienes 12 días disponibles para disfrutar.
@@ -164,7 +160,6 @@
                     <button type="submit" class="btn btn-primary">Enviar Solicitud de Vacaciones</button>
                 </form>
 
-                <!-- Formulario 2: Préstamos -->
                 <form id="form-solicitud-prestamo" class="form-solicitud-pane" style="display: none;">
                     <div style="background-color: #EFF6FF; padding: 0.8rem 1rem; border-radius: 8px; color: #1E40AF; font-size: 0.85rem; margin-bottom: 1.2rem;">
                         <strong>Límite de Préstamo por Nómina:</strong> Hasta $25,000.00 MXN. Descuento automático quincenal.
@@ -193,7 +188,6 @@
                     <button type="submit" class="btn btn-primary">Enviar Solicitud de Préstamo</button>
                 </form>
 
-                <!-- Formulario 3: Actualización de Datos Generales / Perfil / Banco -->
                 <form id="form-solicitud-datos" class="form-solicitud-pane" style="display: none;">
                     <div style="background-color: #F0FDF4; padding: 0.8rem 1rem; border-radius: 8px; color: #065F46; font-size: 0.85rem; margin-bottom: 1.2rem;">
                         <strong>Solicitud de Cambio de Datos:</strong> Solicita modificaciones en tu cuenta bancaria (CLABE), teléfono o domicilio.
@@ -225,7 +219,6 @@
         </div>
     </div>
 
-    <!-- Modal Detalle de Solicitud -->
     <div class="modal-backdrop" id="modal-detalle-solicitud-backdrop">
         <div class="modal-container" style="max-width: 550px;">
             <div class="modal-header">
@@ -235,7 +228,7 @@
                 </button>
             </div>
             <div class="modal-body" id="detalle-body-content">
-                <!-- Se llena dinámicamente con JS -->
+                
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline btn-sm" id="btn-cancel-detail-modal">Cerrar</button>

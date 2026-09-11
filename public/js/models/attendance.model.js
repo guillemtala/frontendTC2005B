@@ -13,7 +13,7 @@ export const AttendanceModel = {
                 return data.calendarRecords || data;
             }
         } catch (e) {
-            // Silencioso si no hay endpoint
+            
         }
         return this.getAllRecords();
     },
@@ -141,7 +141,6 @@ export const AttendanceModel = {
 
         localStorage.setItem(STORAGE_KEY_RECORDS, JSON.stringify(logs));
 
-        // Intento asincrónico a API si existe
         fetchWithAuth('/asistencia/check-in', {
             method: 'POST',
             body: JSON.stringify({ fecha: dateKey, hora: timeStr })

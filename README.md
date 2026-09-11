@@ -29,7 +29,7 @@ npm run dev
 La terminal mostrará la dirección donde se está ejecutando el proyecto. Normalmente será:
 
 ```text
-http://localhost:3000
+http://localhost:5173
 ```
 
 Abre esta dirección en el navegador para acceder a la aplicación.

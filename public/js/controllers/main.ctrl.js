@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Eventos de navegación al hacer clic en las tarjetas de acción
     const cardMap = {
         'card-action-solicitudes': '/pages/solicitudes.html',
         'card-action-nomina': '/pages/nomina.html',

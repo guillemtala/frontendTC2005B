@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectTipo = document.getElementById('select-filter-tipo');
     const selectEstatus = document.getElementById('select-filter-estatus');
 
-    // Modales
     const createModal = document.getElementById('modal-nueva-solicitud-backdrop');
     const btnCloseCreate = document.getElementById('btn-close-create-modal');
 
@@ -21,12 +20,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnCloseDetail = document.getElementById('btn-close-detail-modal');
     const btnCancelDetail = document.getElementById('btn-cancel-detail-modal');
 
-    // Acciones rápidas
     const cardVacaciones = document.getElementById('card-new-vacaciones');
     const cardPrestamo = document.getElementById('card-new-prestamo');
     const cardDatos = document.getElementById('card-new-datos');
 
-    // Tabs y formularios
     const tabBtns = document.querySelectorAll('.btn-tab-solicitud');
     const formPanes = document.querySelectorAll('.form-solicitud-pane');
 
@@ -34,21 +31,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const formPres = document.getElementById('form-solicitud-prestamo');
     const formDatos = document.getElementById('form-solicitud-datos');
 
-    // Vacaciones
     const vacInicio = document.getElementById('vac-fecha-inicio');
     const vacFin = document.getElementById('vac-fecha-fin');
     const vacCalc = document.getElementById('vac-dias-calculados');
 
     await renderTable();
 
-    // Tab inicial desde URL
     const urlParams = new URLSearchParams(window.location.search);
     const requestedTab = urlParams.get('tab');
     if (requestedTab && ['vacaciones', 'prestamos', 'actualizacion_datos'].includes(requestedTab)) {
         openCreateModal(requestedTab);
     }
 
-    // Filtros
     if (selectTipo) {
         selectTipo.addEventListener('change', async (e) => {
             filterTipo = e.target.value;
@@ -63,7 +57,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Modal nueva solicitud
     if (cardVacaciones) cardVacaciones.addEventListener('click', () => openCreateModal('vacaciones'));
     if (cardPrestamo) cardPrestamo.addEventListener('click', () => openCreateModal('prestamos'));
     if (cardDatos) cardDatos.addEventListener('click', () => openCreateModal('actualizacion_datos'));
@@ -90,7 +83,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Cálculo de días
     if (vacInicio && vacFin) {
         const updateDias = () => {
             if (vacInicio.value && vacFin.value) {
@@ -109,7 +101,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         vacFin.addEventListener('change', updateDias);
     }
 
-    // Guardar formularios
     if (formVac) {
         formVac.addEventListener('submit', async (e) => {
             e.preventDefault();

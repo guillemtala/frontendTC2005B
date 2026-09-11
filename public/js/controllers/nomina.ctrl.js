@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await renderKPIs();
     await renderTable();
 
-    // Filtros
     if (selectAnio) {
         selectAnio.addEventListener('change', async (e) => {
             currentAnio = e.target.value;
@@ -54,7 +53,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Modal de recibo
     if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
     if (btnCancelModal) btnCancelModal.addEventListener('click', closeModal);
 
@@ -201,7 +199,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         container.innerHTML = `
             <div class="cfdi-paper">
-                <!-- Empresa -->
+                
                 <div class="cfdi-header">
                     <div class="cfdi-company-info">
                         <h2>${empresa.nombre || empresa.razon_social || ''}</h2>
@@ -214,7 +212,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                 </div>
 
-                <!-- Datos del Trabajador y Periodo -->
                 <div class="cfdi-grid-details">
                     <div class="cfdi-box-section">
                         <h4>DATOS DEL TRABAJADOR</h4>
@@ -297,9 +294,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                 </div>
 
-                <!-- Conceptos -->
                 <div class="cfdi-tables-grid-3">
-                    <!-- Percepciones -->
+                    
                     <div class="cfdi-table-wrapper">
                         <div class="cfdi-table-title">PERCEPCIONES</div>
                         <table class="cfdi-mini-table">
@@ -324,7 +320,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </table>
                     </div>
 
-                    <!-- Deducciones -->
                     <div class="cfdi-table-wrapper">
                         <div class="cfdi-table-title deducciones">DEDUCCIONES</div>
                         <table class="cfdi-mini-table">
@@ -349,7 +344,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </table>
                     </div>
 
-                    <!-- Saldos e Informativos -->
                     <div class="cfdi-table-wrapper">
                         <div class="cfdi-table-title informativos">SALDOS O INFORMATIVOS</div>
                         <table class="cfdi-mini-table">
@@ -375,7 +369,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                 </div>
 
-                <!-- Totales -->
                 <div class="cfdi-summary-banner">
                     <div class="cfdi-summary-item">
                         <span class="cfdi-summary-label">Total Percepciones:</span>

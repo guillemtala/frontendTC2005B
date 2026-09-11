@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = initLayout('gamificacion');
     if (!user) return;
 
-    // Botón Jugar Ahora (Juego de Unity)
     const btnJugar = document.getElementById('btn-jugar-now');
     if (btnJugar) {
         btnJugar.addEventListener('click', () => {
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Botón Reclamar Recompensa Diaria
     const btnReclamar = document.getElementById('btn-reclamar-recompensa');
     if (btnReclamar) {
         btnReclamar.addEventListener('click', () => {

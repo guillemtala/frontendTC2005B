@@ -90,7 +90,7 @@ export const SolicitudesModel = {
                 return list.map(formatSolicitud);
             }
         } catch (error) {
-            // Backend endpoint no disponible, usamos localStorage
+            
         }
 
         const stored = getStoredSolicitudes();
@@ -105,7 +105,7 @@ export const SolicitudesModel = {
                 return formatSolicitud(raw);
             }
         } catch (error) {
-            // Backend endpoint no disponible, usamos localStorage
+            
         }
 
         const list = await this.getAllSolicitudes();
@@ -152,7 +152,7 @@ export const SolicitudesModel = {
                 return formatSolicitud(result);
             }
         } catch (error) {
-            // Backend endpoint no disponible, guardamos en localStorage
+            
         }
 
         const stored = getStoredSolicitudes();

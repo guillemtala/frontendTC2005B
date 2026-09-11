@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/components.css">
 
-    <!-- Librería html2pdf.js para exportar recibos a PDF directo -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
@@ -24,20 +23,17 @@
     <div class="dashboard-layout">
         <div class="menu-overlay" id="menu-overlay"></div>
 
-        <!-- Sidebar Inyectado por JS -->
         <div id="sidebar-container"></div>
 
         <main class="main-content">
-            <!-- Top Navbar Inyectada por JS -->
+            
             <div id="navbar-container"></div>
 
-            <!-- Encabezado de la Sección -->
             <header class="page-header">
                 <h1 class="title-primary">Nómina y Recibos de Pago</h1>
                 <p class="subtitle">Consulta tu historial de recibos timbrados CFDI 4.0 (México), revisa el desglose de percepciones y deducciones, o descarga tus comprobantes en PDF.</p>
             </header>
 
-            <!-- Tarjetas de Resumen (KPIs) -->
             <section class="stats-grid">
                 <div class="card stat-card">
                     <div>
@@ -73,7 +69,6 @@
                 </div>
             </section>
 
-            <!-- Filtros y Controles -->
             <section class="payroll-controls">
                 <div class="filters-group">
                     <label for="select-filter-anio" style="font-size: 0.9rem; font-weight: 600; color: var(--primary-dark);">Filtrar por:</label>
@@ -102,7 +97,6 @@
                 </div>
             </section>
 
-            <!-- Tabla de Recibos de Nómina -->
             <section class="table-card">
                 <div class="table-responsive">
                     <table class="data-table">
@@ -119,7 +113,7 @@
                             </tr>
                         </thead>
                         <tbody id="nomina-table-body">
-                            <!-- Los recibos se inyectan dinámicamente con JS -->
+                            
                         </tbody>
                     </table>
                 </div>
@@ -127,7 +121,6 @@
         </main>
     </div>
 
-    <!-- Modal de Recibo de Nómina -->
     <div class="modal-backdrop" id="modal-cfdi-backdrop">
         <div class="modal-container">
             <div class="modal-header">
@@ -141,7 +134,7 @@
             </div>
 
             <div class="modal-body" id="cfdi-paper-content">
-                <!-- Se inyecta el contenido oficial del recibo con JS -->
+                
             </div>
 
             <div class="modal-footer">
@@ -160,7 +153,6 @@
         </div>
     </div>
 
-    <!-- Script Controlador de Nómina -->
     <script type="module" src="/js/controllers/nomina.ctrl.js"></script>
 </body>
 

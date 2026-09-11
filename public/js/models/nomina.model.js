@@ -326,7 +326,7 @@ export const NominaModel = {
                 rawList = Array.isArray(data) ? data : (data.recibos || data.nominas || []);
             }
         } catch (error) {
-            // API no disponible
+            
         }
 
         if (!rawList || rawList.length === 0) {
@@ -354,7 +354,7 @@ export const NominaModel = {
                 return formatReciboItem(raw);
             }
         } catch (error) {
-            // API no disponible
+            
         }
 
         const list = await this.getRecibos('all', 'all');

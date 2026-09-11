@@ -4,5 +4,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = initLayout('noticias');
     if (!user) return;
 
-    // Lógica exclusiva de noticias...
 });

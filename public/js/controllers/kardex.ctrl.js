@@ -7,18 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = initLayout('kardex');
     if (!user) return;
 
-    // Reloj digital
     startLiveClock();
 
-    // KPIs
     renderKPIs();
 
-    // Calendario y bitácora
     renderCalendar(currentDate);
     renderDetailedTable();
     updateButtonStates();
 
-    // Navegación de mes
     const prevBtn = document.getElementById('cal-prev-month');
     const nextBtn = document.getElementById('cal-next-month');
 
@@ -36,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Botones entrada/salida (Clickeables demostrativos)
     const checkInBtn = document.getElementById('btn-checkin');
     const checkOutBtn = document.getElementById('btn-checkout');
 

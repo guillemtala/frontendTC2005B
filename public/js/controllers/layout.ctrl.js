@@ -5,27 +5,24 @@ import { renderNavbar } from '../views/navbar.view.js';
 const THEME_KEY = 'eslabon_theme_preference';
 
 export function initLayout(activeRoute = 'inicio') {
-    // Validar usuario
+    
     const currentUser = AuthModel.getCurrentUser();
     if (!currentUser) {
         window.location.replace('/');
         return null;
     }
 
-    // Validar autenticación de doble factor (2FA)
     const is2FA = localStorage.getItem('eslabon_2fa_verified') === 'true';
     if (!is2FA) {
         window.location.replace('/pages/2fa.html');
         return null;
     }
 
-    // Renderizar sidebar
     const sidebarContainer = document.getElementById('sidebar-container');
     if (sidebarContainer) {
         sidebarContainer.innerHTML = renderSidebar(activeRoute);
     }
 
-    // Renderizar navbar
     const navbarContainer = document.getElementById('navbar-container');
     if (navbarContainer) {
         if (navbarContainer.tagName === 'NAV') {
@@ -37,7 +34,6 @@ export function initLayout(activeRoute = 'inicio') {
         }
     }
 
-    // Eventos globales
     bindGlobalEvents();
 
     return currentUser;
@@ -46,7 +42,6 @@ export function initLayout(activeRoute = 'inicio') {
 function bindGlobalEvents() {
     applyThemePreference();
 
-    // Toggle tema
     const themeBtn = document.getElementById('btn-theme-toggle');
     if (themeBtn) {
         themeBtn.addEventListener('click', (e) => {
@@ -58,7 +53,6 @@ function bindGlobalEvents() {
         });
     }
 
-    // Logout
     const logoutBtn = document.getElementById('btn-logout');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
@@ -69,7 +63,6 @@ function bindGlobalEvents() {
         });
     }
 
-    // Notificaciones
     const bellBtn = document.getElementById('btn-notifications');
     const dropdownMenu = document.getElementById('dropdown-notifications');
     if (bellBtn && dropdownMenu) {
@@ -85,7 +78,6 @@ function bindGlobalEvents() {
         });
     }
 
-    // Menú móvil
     const btnMenu = document.getElementById('btn-menu');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('menu-overlay');
